@@ -1,20 +1,17 @@
 import { Controller, Post, Body, Get, Param, Patch, Delete } from "@nestjs/common";
 import { PlacesService } from './places.service'
+import { CreatePlaceDto } from "./dtos/creat-place.dto";
+import { PatchPlaceDto } from "./dtos/patch-place.dto";
 
-@Controller('places')
+@Controller('places') 
 export class PlacesController {
   constructor(private placesService: PlacesService) { }
 
   @Post()
-  addPlace(
-    @Body('title') placeTitle: string,
-    @Body('description') placeDesc: string,
-    @Body('adress') placeAdress: string,
+  addPlace(@Body() createPlace: CreatePlaceDto
   ) {
-    const generatedId = this.placesService.insertPlaces(
-      placeTitle,
-      placeDesc,
-      placeAdress,
+    const generatedId = this.placesService.insertPlace(
+      createPlace
     );
     return { id: generatedId };
   }
@@ -23,20 +20,20 @@ export class PlacesController {
   getAllPlaces() {
     return this.placesService.getPlaces();
   }
-
+  
   @Get(':id')
-  getPlace(@Param('id') placeId: string, ) {
+  getPlace(
+    @Param('id') placeId: string, 
+  ) {
     return this.placesService.getSinglePlace(placeId);
   }
 
   @Patch(':id')
   updatePlace(
     @Param('id') placeId: string,
-    @Body('title') placeTitle: string,
-    @Body('description') placeDesc: string,
-    @Body('adress') placeAdress: string,
+    @Body() patchPlaceDto: PatchPlaceDto,
   ) {
-    this.placesService.updatePlace(placeId, placeTitle, placeDesc, placeAdress);
+    this.placesService.updatePlace(placeId, patchPlaceDto);
     return null;
   }
 

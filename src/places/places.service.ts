@@ -2,14 +2,16 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { v4 as uuid } from 'uuid';
 
 import { Place } from './place.model'
+import { CreatePlaceDto } from "./dtos/creat-place.dto";
+import { PatchPlaceDto } from "./dtos/patch-place.dto";
 
 @Injectable()
 export class PlacesService {
   private places: Place[] = [];
 
-  insertPlaces(title: string, desc: string, adress: string) {
+  insertPlace( createpPlaceDto: CreatePlaceDto) {
     const placeId: string = uuid()
-    const newPlace = new Place(placeId , title, desc, adress)
+    const newPlace = new Place(placeId , createpPlaceDto.title, createpPlaceDto.desc, createpPlaceDto.adress)
     this.places.push(newPlace);
     return placeId;
   }
@@ -23,20 +25,31 @@ export class PlacesService {
     return {...place};
   }
 
-  updatePlace(placeId: string, title: string, desc: string, adress: string) {
+  updatePlace(placeId: string, patchPlaceDto: PatchPlaceDto) {
     const [place, index] = this.findPlace(placeId)
     const updatedPlace = {... place};
-    if(title){
-      updatedPlace.title = title;
+    if(patchPlaceDto.title){
+      updatedPlace.title = patchPlaceDto.title;
     }
-    if(desc){
-      updatedPlace.desc = desc;
+    if(patchPlaceDto.desc){
+      updatedPlace.desc = patchPlaceDto.desc;
     }
-    if(adress){
-      updatedPlace.adress = adress;
+    if(patchPlaceDto.adress){
+      updatedPlace.adress = patchPlaceDto.adress;
     }
     this.places[index] = updatedPlace;
   }
+//asdasd
+  //TODO: test this
+  // updatePlace(placeId: string, patchPlaceDto: PatchPlaceDto) {
+  //   const [place, index] = this.findPlace(placeId)
+  //   const updatedPlace = {... place};
+  //   for(const pop in patchPlaceDto) {
+  //     patchPlaceDto[pop] = updatedPlace[pop] ? updatedPlace[pop] :  patchPlaceDto[pop];
+  //   }
+  //   this.places[index] = updatedPlace;
+  // }
+
 
   deletePlace(placeId: string) {
     const index = this.findPlace(placeId)[1];
