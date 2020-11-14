@@ -3,6 +3,6 @@ export class Place {
     public id: string,
     public title: string,
     public desc: string,
-    public adress: string
+    public adress: string,
   ) {}
 }

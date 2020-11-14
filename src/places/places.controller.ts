@@ -1,18 +1,23 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from "@nestjs/common";
-import { PlacesService } from './places.service'
-import { CreatePlaceDto } from "./dtos/creat-place.dto";
-import { PatchPlaceDto } from "./dtos/patch-place.dto";
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+import { PlacesService } from './places.service';
+import { CreatePlaceDto } from './dtos/creat-place.dto';
+import { PatchPlaceDto } from './dtos/patch-place.dto';
 
-@Controller('places') 
+@Controller('places')
 export class PlacesController {
-  constructor(private placesService: PlacesService) { }
+  constructor(private placesService: PlacesService) {}
 
   @Post()
-  addPlace(@Body() createPlace: CreatePlaceDto
-  ) {
-    const generatedId = this.placesService.insertPlace(
-      createPlace
-    );
+  addPlace(@Body() createPlace: CreatePlaceDto) {
+    const generatedId = this.placesService.insertPlace(createPlace);
     return { id: generatedId };
   }
 
@@ -20,11 +25,9 @@ export class PlacesController {
   getAllPlaces() {
     return this.placesService.getPlaces();
   }
-  
+
   @Get(':id')
-  getPlace(
-    @Param('id') placeId: string, 
-  ) {
+  getPlace(@Param('id') placeId: string) {
     return this.placesService.getSinglePlace(placeId);
   }
 
@@ -38,7 +41,7 @@ export class PlacesController {
   }
 
   @Delete(':id')
-  removePlace(@Param('id') placeId: string,) {
+  removePlace(@Param('id') placeId: string) {
     this.placesService.deletePlace(placeId);
     return null;
   }

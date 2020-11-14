@@ -8,8 +8,8 @@ export class AppController {
 
   @Get()
   @Header('Content-Type', 'text/html')
-  getHello(): {name: string} {
-    return {name: 'Felix'}
+  getHello(): { name: string } {
+    return { name: 'Felix' };
     //return this.appService.getHello();
   }
 }
