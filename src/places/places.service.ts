@@ -44,7 +44,7 @@ export class PlacesService {
     }
     this.places[index] = updatedPlace;
   }
-  //asdasd
+
   //TODO: test this
   // updatePlace(placeId: string, patchPlaceDto: PatchPlaceDto) {
   //   const [place, index] = this.findPlace(placeId)

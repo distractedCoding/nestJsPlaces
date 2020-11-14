@@ -10,12 +10,19 @@ import {
 import { PlacesService } from './places.service';
 import { CreatePlaceDto } from './dtos/creat-place.dto';
 import { PatchPlaceDto } from './dtos/patch-place.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('places')
 @Controller('places')
 export class PlacesController {
   constructor(private placesService: PlacesService) {}
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'The record has been successfully created.',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
   addPlace(@Body() createPlace: CreatePlaceDto) {
     const generatedId = this.placesService.insertPlace(createPlace);
     return { id: generatedId };
